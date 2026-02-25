@@ -13,7 +13,6 @@ public class BookDocument {
 
     @Id
     private String id;
-
     private String isbn;
     private String title;
     private String authorName;

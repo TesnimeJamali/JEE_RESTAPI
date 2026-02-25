@@ -1,20 +1,26 @@
 package com.bibliotech.bibliotech.controller;
 
+import com.bibliotech.bibliotech.Tp2Application;
 import com.bibliotech.bibliotech.dto.BookDTO;
+import com.bibliotech.bibliotech.repository.BookRepository;
+import com.bibliotech.bibliotech.security.SecurityTestConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes = Tp2Application.class)
 @AutoConfigureMockMvc
+@Import(SecurityTestConfig.class) // ← on importe la config sécurité pour tests
 class BookControllerTest {
 
     @Autowired
@@ -22,6 +28,9 @@ class BookControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Test
     void shouldCreateBook() throws Exception {
@@ -43,6 +52,7 @@ class BookControllerTest {
 
     @Test
     void shouldGetAllBooks() throws Exception {
+
         mockMvc.perform(get("/api/v1/books"))
                 .andExpect(status().isOk());
     }

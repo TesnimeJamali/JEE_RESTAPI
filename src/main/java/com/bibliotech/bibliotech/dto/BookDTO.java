@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookDTO {
 
-    private String id;
+    private Long id;
 
     @NotBlank(message = "Title must not be blank")
     private String title;
